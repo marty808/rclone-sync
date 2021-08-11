@@ -23,6 +23,7 @@ if [ ${RCLONE_INIT} != "NONE" ]; then
    rclone copy WEBDAV:/ /data
 fi
 
+# build command for RCLONE
 cmd="/bin/rclone ${RCLONE_MODE} /data WEBDAV:/"
  
 echo "Setup backup cron job with cron expression BACKUP_CRON: ${BACKUP_CRON}"
