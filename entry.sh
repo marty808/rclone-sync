@@ -17,5 +17,23 @@ fi
 
 echo "creating rclone remote config"
 rclone config create WEBDAV webdav vendor nextcloud url ${WEBDAV_HOST}/${WEBDAV_PATH} user ${WEBDAV_USER} pass ${WEBDAV_PASSWORD}
-echo "Mounting Webdav ${WEBDAV_HOST}/${WEBDAV_PATH} to /data"
-rclone mount --allow-non-empty --vfs-cache-mode writes WEBDAV:/ /data
+
+if [ ${RCLONE_INIT} != "NONE" ]; then 
+   echo "copy initial data from Webdav ${WEBDAV_HOST}/${WEBDAV_PATH} to /data"
+   rclone copy WEBDAV:/ /data
+fi
+
+cmd="/bin/rclone ${RCLONE_MODE} /data WEBDAV:/"
+ 
+echo "Setup backup cron job with cron expression BACKUP_CRON: ${BACKUP_CRON}"
+echo "${BACKUP_CRON} /usr/bin/flock -n /var/run/backup.lock ${cmd} >> /var/log/cron.log 2>&1" > /var/spool/cron/crontabs/root
+
+# Make sure the file exists before we start tail
+touch /var/log/cron.log
+
+# start the cron deamon
+crond
+
+echo "Container started."
+
+exec "$@"
