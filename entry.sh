@@ -18,7 +18,7 @@ fi
 echo "creating rclone remote config"
 rclone config create WEBDAV webdav vendor nextcloud url ${WEBDAV_HOST}/${WEBDAV_PATH} user ${WEBDAV_USER} pass ${WEBDAV_PASSWORD}
 
-if [ ${RCLONE_INIT} != "NONE" ]; then 
+if [ ${RCLONE_INIT} ]; then 
    echo "copy initial data from Webdav ${WEBDAV_HOST}/${WEBDAV_PATH} to /data"
    rclone copy WEBDAV:/ /data
 fi

@@ -9,10 +9,10 @@ ENV WEBDAV_HOST=""
 ENV WEBDAV_PATH=""
 ENV WEBDAV_USER=""
 ENV WEBDAV_PASSWORD=""
-# modes are SYNC or COPY
-ENV RCLONE_MODE="SYNC"
+# modes are sync or copy
+ENV RCLONE_MODE="sync"
 # INIT could be COPY or NONE
-ENV RCLONE_INIT="COPY"
+ENV RCLONE_INIT=true
 # cron schedule default every minute
 ENV CRON_SCHEDULE="*/1 * * * *"
 
