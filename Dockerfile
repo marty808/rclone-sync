@@ -17,13 +17,10 @@ ENV RCLONE_INIT="COPY"
 ENV CRON_SCHEDULE="*/1 * * * *"
 
 
-# create crontabs etc.
-RUN mkdir -p /var/spool/cron/crontabs /var/log; \
+# create needed directories
+RUN mkdir -p /data /var/spool/cron/crontabs /var/log; \
     touch /var/log/cron.log;
 
-
-# /data is the dir which will be mounted
-RUN mkdir /data
 
 COPY entry.sh /entry.sh
 
