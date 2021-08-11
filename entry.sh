@@ -26,8 +26,8 @@ fi
 # build command for RCLONE
 cmd="/bin/rclone ${RCLONE_MODE} /data WEBDAV:/"
  
-echo "Setup backup cron job with cron expression BACKUP_CRON: ${BACKUP_CRON}"
-echo "${BACKUP_CRON} /usr/bin/flock -n /var/run/backup.lock ${cmd} >> /var/log/cron.log 2>&1" > /var/spool/cron/crontabs/root
+echo "Setup backup cron job with cron schedule: ${CRON_SCEDULE}"
+echo "${CRON_SCHEDULE} /usr/bin/flock -n /var/run/backup.lock ${cmd} >> /var/log/cron.log 2>&1" > /var/spool/cron/crontabs/root
 
 # Make sure the file exists before we start tail
 touch /var/log/cron.log
