@@ -26,4 +26,7 @@ COPY entry.sh /entry.sh
 
 WORKDIR "/"
 ENTRYPOINT ["/entry.sh"]
+
+HEALTHCHECK CMD test -f /run/ready 
+
 CMD ["tail","-fn0","/var/log/cron.log"]
