@@ -15,6 +15,8 @@ ENV RCLONE_MODE="sync"
 ENV RCLONE_INIT=true
 # cron schedule default every minute
 ENV CRON_SCHEDULE="*/1 * * * *"
+# rclone param
+ENV UMASK="0022"
 
 
 # create needed directories

@@ -2,6 +2,9 @@
 
 echo "Starting container ..."
 
+#set filesystem permissions masking
+umask $UMASK
+
 if [ -n "${WEBDAV_HOST}" ]; then
    echo "WEBDAV enabled: ${WEBDAV_HOST}/${WEBDAV_PATH}"
 else
