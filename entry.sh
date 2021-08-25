@@ -2,6 +2,9 @@
 
 echo "Starting container ..."
 
+# umask 
+umask $UMASK
+
 if [ -n "${WEBDAV_HOST}" ]; then
    echo "WEBDAV enabled: ${WEBDAV_HOST}/${WEBDAV_PATH}"
 else
@@ -20,11 +23,11 @@ rclone config create WEBDAV webdav vendor nextcloud url ${WEBDAV_HOST}/${WEBDAV_
 
 if [ ${RCLONE_INIT} ]; then
    echo "copy initial data from Webdav ${WEBDAV_HOST}/${WEBDAV_PATH} to /data"
-   rclone --umask $UMASK copy WEBDAV:/ /data
+   rclone copy WEBDAV:/ /data
 fi
 
 # build command for RCLONE
-cmd="/bin/rclone ${RCLONE_MODE} --umask $UMASK /data WEBDAV:/"
+cmd="/bin/rclone ${RCLONE_MODE} /data WEBDAV:/"
 
 echo "Setup backup cron job with cron schedule: ${CRON_SChEDULE}"
 echo "${CRON_SCHEDULE} /usr/bin/flock -n /var/run/backup.lock ${cmd} >> /var/log/cron.log 2>&1" > /var/spool/cron/crontabs/root
