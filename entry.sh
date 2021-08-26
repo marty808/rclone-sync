@@ -2,8 +2,14 @@
 
 echo "Starting container ..."
 
-# umask 
+# umask for new files
+echo "configure permissions"
 umask $UMASK
+
+# get directory permissions from UMASK
+# change permissions for data directory
+dir_perm=$(printf "%o\n" $((0777-$UMASK)))
+chmod -R $dir_perm /data
 
 if [ -n "${WEBDAV_HOST}" ]; then
    echo "WEBDAV enabled: ${WEBDAV_HOST}/${WEBDAV_PATH}"
